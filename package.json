@@ -1,0 +1,157 @@
+{
+  "name": "x10-mochad-adapter",
+  "display_name": "X10 Mochad",
+  "version": "0.0.1",
+  "description": "A WebThings Gateway adapter for controlling X10 devices through a Mochad serial interface.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EricLEdberg/x10-mochad-adapter.git"
+  },
+  "keywords": [
+    "X10",
+    "IoT",
+    "WebThings",
+    "Mochad",
+    "CM15/CM19"
+  ],
+  "author": "Eric L. Edberg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EricLEdberg/x10-mochad-adapter/issues"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "SHA256SUMS",
+    "manifest.json",
+    "index.js",
+    "x10-mochad-adapter.js",
+    "clsMOCHAD.js"
+  ],
+  "homepage": "https://github.com/EricLEdberg/x10-mochad-adapter",
+  "moziot": {
+    "api": {
+      "min": 2,
+      "max": 2
+    },
+    "plugin": true,
+    "exec": "{nodeLoader} {path}",
+    "config": {
+      "mochadipaddr": "127.0.0.1",
+      "mochadport": "1099",
+      "mochadwaittime": "5",
+      "mochaddebug": false,
+      "modules": []
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "mochadipaddr": {
+          "type": "string",
+          "description": "Mochad IP address or server name.",
+          "default": "127.0.0.1"
+        },
+        "mochadport": {
+          "type": "string",
+          "description": "Mochad TCP port.",
+          "default": "1099"
+        },
+        "mochadwaittime": {
+          "type": "string",
+          "description": "Seconds netcat will wait (-w n) during each command execution.",
+          "default": "5"
+        },
+        "mochaddebug": {
+          "type": "boolean",
+          "description": "Enable verbose logging.  See: settings -> developer -> view internal logs.",
+          "default": false
+        },
+        "modules": {
+          "type": "array",
+          "title": "X10 Modules",
+          "description": "Add X10 Modules",
+          "items": {
+            "type": "object",
+            "properties": {
+              "houseCode": {
+                "description": "The house code assigned to the module.",
+                "type": "string",
+                "default": "A",
+                "enum": [
+                  "A",
+                  "B",
+                  "C",
+                  "D",
+                  "E",
+                  "F",
+                  "G",
+                  "H",
+                  "I",
+                  "J",
+                  "K",
+                  "L",
+                  "M",
+                  "N",
+                  "O",
+                  "P"
+                ]
+              },
+              "unitCode": {
+                "description": "The unit code assigned to the module.",
+                "type": "string",
+                "default": "1",
+                "enum": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "7",
+                  "8",
+                  "9",
+                  "10",
+                  "11",
+                  "12",
+                  "13",
+                  "14",
+                  "15",
+                  "16"
+                ]
+              },
+              "moduleType": {
+                "description": "Type of the module.",
+                "type": "string",
+                "enum": [
+                  "Lamp Module",
+                  "Appliance Module",
+                  "On/Off Switch",
+                  "Dimmer Switch",
+                  "On/Off Sensor"
+                ],
+                "default": "Lamp Module"
+              },
+              "modulationMethod": {
+                "description": "X10 modulation method.",
+                "type": "string",
+                "default": "PL",
+                "enum": [
+                  "PL",
+                  "RF"
+                ]
+              },
+              "debug": {
+                "description": "Enable verbose logging.  See: settings -> developer -> view internal logs.",
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
