@@ -269,17 +269,9 @@ class X10Adapter extends Adapter {
     }
 
     unload() {
-        return new Promise(resolve => {
-        
-        // this is failing?
-        //    this.X10Adapter.on('close', () => {
-        //        console.log('X10Adapter.unload():  obtained close event');
-        //        resolve();
-        //    });
-            
-            this.objMOCHAD.stop();
-            
-            console.log('X10Adapter.unload():  stopping X10Adapter')
+        return new Promise(resolve => {           
+            console.log('X10Adapter.unload():  stopping x10-mochad-adapter process...')
+            this.objMOCHAD.Stop();
             this.X10Adapter.stop();
         });
     }

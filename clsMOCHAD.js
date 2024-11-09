@@ -17,18 +17,16 @@ class clsMOCHAD {
     }  
 
     // ------------------------------------------------------------------------------------------
-    // TODO:  RF/PL is a parameter of each Device.  Get it's value and correct xCommand.
     // ------------------------------------------------------------------------------------------
    
     TurnOn(X10Device) {
-        var xCommand = "RF " + X10Device.x10Addr + ' ON';
+        var xCommand = X10Device.modulationMethod + ' ' + X10Device.x10Addr + ' ON';
         console.log('clsMOCHAD.js:  TurnOn: command: ' + xCommand);
         this.MochadPrepareCommand(X10Device, xCommand);
     }
 
-
     TurnOff(X10Device) {
-       var xCommand = "RF " + X10Device.x10Addr + ' OFF';
+       var xCommand = X10Device.modulationMethod + ' ' + X10Device.x10Addr + ' OFF';
        console.log('clsMOCHAD.js:  TurnOff: command: ' + xCommand);
        this.MochadPrepareCommand(X10Device, xCommand);
     }
@@ -36,7 +34,7 @@ class clsMOCHAD {
     // TODO:  figure out correct DIM syntax
     Dim(X10Device) {
         var level    = X10Device.properties.get('level').value;
-        var xCommand = "RF " + X10Device.x10Addr + ' DIM';
+        var xCommand = X10Device.modulationMethod + ' ' + X10Device.x10Addr + ' DIM';
         this.MochadPrepareCommand(X10Device, xCommand);
     }
 
@@ -44,7 +42,7 @@ class clsMOCHAD {
     // TODO:  figure out correct BRIGHT syntax
     Bright(X10Device) {
         var level    = X10Device.properties.get('level').value;
-        var xCommand = "RF " + X10Device.x10Addr + ' BRIGHT';
+        var xCommand = X10Device.modulationMethod + ' ' + X10Device.x10Addr + ' BRIGHT';
         this.MochadPrepareCommand(X10Device, xCommand);
     }
 
@@ -75,7 +73,7 @@ class clsMOCHAD {
             // Hard-coded safety exit (for now) to prevent runaway processes in case I mess up coding (GAK)
             // TODO:  xCnt should be a class global decremented when command completes
             xCnt++;
-            if (xCnt > 5) {
+            if (xCnt > 10) {
                 console.log('MochadPrepareCommand(): EXCEEDED MAX PROCCESS QUEUE(5)');
                 return;
             }
@@ -85,8 +83,10 @@ class clsMOCHAD {
             // TODO:  initialize to 5 seconds for legacy devices that don't have it set yet
             this.MochadWaitTime = "5";
 
-            // Netcat path must be that inside a docker container (if using docker...)
-            var xCmd2 = "/bin/echo \"" + xCmd1 + "\" | /home/node/.mozilla-iot/addons/nc -w " + this.MochadWaitTime + " " + this.MochadIpAddr + " " + this.MochadPort;
+            // Netcat path must reside inside the docker container (if using docker)
+            // e.g.:  ln -s /usr/bin/nc /home/$WTVOL/addons/nc (see docker start command for vol definition)
+            // TODO:  the path to NC should be an option defined when editing this addon configuration parameters
+            var xCmd2 = "/bin/echo \"" + xCmd1 + "\" | /usr/bin/nc -w " + this.MochadWaitTime + " " + this.MochadIpAddr + " " + this.MochadPort;
             
             this.ChildProcessExecute(X10Device, xCmd2);
         }

@@ -1,8 +1,8 @@
 {
   "name": "x10-mochad-adapter",
-  "display_name": "X10 Mochad",
-  "version": "0.0.1",
-  "description": "A WebThings Gateway adapter for controlling X10 devices through a Mochad serial interface.",
+  "display_name": "X10 Mochad CM15",
+  "version": "0.0.3",
+  "description": "A WebThings Gateway adapter for controlling X10 devices using netcat to TCP connect to a (remote) Mochad process that connects to a USB-based X10 CM15 interface.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,7 +16,8 @@
     "IoT",
     "WebThings",
     "Mochad",
-    "CM15/CM19"
+    "X10 CM15",
+    "X10 CM19"
   ],
   "author": "Eric L. Edberg",
   "license": "MIT",
